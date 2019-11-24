@@ -33,3 +33,7 @@ code {
 .button-cont button {
   margin-right: 10px;
 }
+
+.App .red {
+  color: red !important;
+}

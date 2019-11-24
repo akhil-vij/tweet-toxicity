@@ -244,6 +244,20 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <TextField
+          disabled
+          id="outlined-disabled"
+          label="Text/Tweet Monitoring Application"
+          defaultValue="This application uses Deep Neural Networks to find out rude/offensive language in texts/tweets. 
+          The tensorflow model is loaded when the page loads, so you might have to wait for 4-5 seconds before you see the prediction of the model.
+          The application is seeded with some dummy data, you can clear the dummy data and fetch random tweets from the twitter API.
+          This application can also be used as a real time rude/offensive language detection in tweets. REMEMBER - Please avoid using offensive language in your social media platforms :)
+          "
+          fullWidth
+          multiline
+          margin="normal"
+          variant="outlined"
+        />
         <div className="button-cont">
           <Button
             variant="contained"
