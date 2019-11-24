@@ -4,8 +4,6 @@ const app = express();
 
 const Twit = require("twit");
 
-console.log("Test");
-
 const T = new Twit({
   consumer_key: "2olSFrH7rBC9XPhDDcMCuJZb2",
   consumer_secret: "57zNtafC4AGCaf3JUFcPbsJsdon8kYBe9Rihz6DaxFfR2DOrXp",
@@ -24,7 +22,7 @@ app.use(
 app.use(bodyParser.json());
 
 app.route("/search").get(function(req, res) {
-  T.get("search/tweets", { q: "since:2018-11-23", count: 3 }, function(
+  T.get("search/tweets", { q: "stupid", count: 20 }, function(
     err,
     data,
     response

@@ -7,66 +7,77 @@ import * as toxicity from "@tensorflow-models/toxicity";
 
 import "./App.css";
 
+let dummyData = [
+  {
+    text:
+      "I will kill your entire family if you do not give me $100000 as ransom amount.",
+    identity_attack: "-",
+    insult: "-",
+    obscene: "-",
+    severe_toxicity: "-",
+    sexual_explicit: "-",
+    threat: "-",
+    toxicity: "-"
+  },
+  {
+    text:
+      "You are writing stupid comments from your room hidden behind your screen. You are quite astonishingly stupid.",
+    identity_attack: "-",
+    insult: "-",
+    obscene: "-",
+    severe_toxicity: "-",
+    sexual_explicit: "-",
+    threat: "-",
+    toxicity: "-"
+  },
+  {
+    text: "What a lovely and bright day. Sun is shining in the clear sky :)",
+    identity_attack: "-",
+    insult: "-",
+    obscene: "-",
+    severe_toxicity: "-",
+    sexual_explicit: "-",
+    threat: "-",
+    toxicity: "-"
+  },
+  {
+    text:
+      "What a lovely and bright day. Sun is shining in the clear sky :). Perfect day for murdering trolls like you.",
+    identity_attack: "-",
+    insult: "-",
+    obscene: "-",
+    severe_toxicity: "-",
+    sexual_explicit: "-",
+    threat: "-",
+    toxicity: "-"
+  },
+  {
+    text: "You are a racist moron.",
+    identity_attack: "-",
+    insult: "-",
+    obscene: "-",
+    severe_toxicity: "-",
+    sexual_explicit: "-",
+    threat: "-",
+    toxicity: "-"
+  },
+  {
+    text:
+      "RT @p_r_k_d_l: this is a stupid idea but i have to get this out of my system https://t.co/6H5BtRh8rL",
+    identity_attack: "-",
+    insult: "-",
+    obscene: "-",
+    severe_toxicity: "-",
+    sexual_explicit: "-",
+    threat: "-",
+    toxicity: "-"
+  }
+];
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tweets: [
-        {
-          text:
-            "I will kill your entire family if you do not give me $100000 as ransom amount.",
-          identity_attack: "-",
-          insult: "-",
-          obscene: "-",
-          severe_toxicity: "-",
-          sexual_explicit: "-",
-          threat: "-",
-          toxicity: "-"
-        },
-        {
-          text:
-            "You are writing stupid comments from your room hidden behind your screen. You are quite astonishingly stupid.",
-          identity_attack: "-",
-          insult: "-",
-          obscene: "-",
-          severe_toxicity: "-",
-          sexual_explicit: "-",
-          threat: "-",
-          toxicity: "-"
-        },
-        {
-          text:
-            "What a lovely and bright day. Sun is shining in the clear sky :)",
-          identity_attack: "-",
-          insult: "-",
-          obscene: "-",
-          severe_toxicity: "-",
-          sexual_explicit: "-",
-          threat: "-",
-          toxicity: "-"
-        },
-        {
-          text:
-            "What a lovely and bright day. Sun is shining in the clear sky :). Perfect day for murdering trolls like you.",
-          identity_attack: "-",
-          insult: "-",
-          obscene: "-",
-          severe_toxicity: "-",
-          sexual_explicit: "-",
-          threat: "-",
-          toxicity: "-"
-        },
-        {
-          text: "You are a racist moron.",
-          identity_attack: "-",
-          insult: "-",
-          obscene: "-",
-          severe_toxicity: "-",
-          sexual_explicit: "-",
-          threat: "-",
-          toxicity: "-"
-        }
-      ]
+      tweets: dummyData
     };
     this.handleEnter = this.handleEnter.bind(this);
     this.handleClear = this.handleClear.bind(this);
@@ -125,15 +136,19 @@ class App extends React.Component {
         return res.json();
       })
       .then(async data => {
-        if (data && data.statuses && data.statuses.length) {
-          const results = await this.model.classify(
-            data.statuses.map(d => d.text)
-          );
-          debugger;
+        if (data) {
+          let results = [];
+          if (data.statuses && data.statuses.length) {
+            results = await this.model.classify(data.statuses.map(d => d.text));
+          } else {
+            data.statuses = [];
+            data.statuses.push(dummyData[5]);
+            results = await this.model.classify(data.statuses.map(d => d.text));
+          }
+
           this.setState(prevState => {
             return {
               tweets: data.statuses.map((tweet, counter) => {
-                debugger;
                 // Going through each column for each tweet
                 let newTweet = {};
                 newTweet.text = tweet.text;
@@ -202,7 +217,7 @@ class App extends React.Component {
             color="primary"
             onClick={this.handleFetch}
           >
-            Fetch Random Tweets
+            Fetch Random Tweet(s)
           </Button>
           <Button onClick={this.handleClear}>Clear Table</Button>
         </div>
