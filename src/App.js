@@ -70,6 +70,7 @@ class App extends React.Component {
     };
     this.handleEnter = this.handleEnter.bind(this);
     this.handleClear = this.handleClear.bind(this);
+    this.handleFetch = this.handleFetch.bind(this);
     this.model = null;
   }
 
@@ -80,7 +81,7 @@ class App extends React.Component {
     const results = await this.model.classify(
       this.state.tweets.map(d => d.text)
     );
-    console.log(results);
+
     // Once you have the results, need to update the state
     this.setState(prevState => {
       return {
@@ -117,6 +118,54 @@ class App extends React.Component {
     });
   }
 
+  handleFetch() {
+    this.handleClear();
+    fetch("/search")
+      .then(res => {
+        return res.json();
+      })
+      .then(async data => {
+        if (data && data.statuses && data.statuses.length) {
+          const results = await this.model.classify(
+            data.statuses.map(d => d.text)
+          );
+          debugger;
+          this.setState(prevState => {
+            return {
+              tweets: data.statuses.map((tweet, counter) => {
+                debugger;
+                // Going through each column for each tweet
+                let newTweet = {};
+                newTweet.text = tweet.text;
+                newTweet["identity_attack"] = results[0].results[counter].match
+                  ? "TRUE"
+                  : "-";
+                newTweet["insult"] = results[1].results[counter].match
+                  ? "TRUE"
+                  : "-";
+                newTweet["obscene"] = results[2].results[counter].match
+                  ? "TRUE"
+                  : "-";
+                newTweet["severe_toxicity"] = results[3].results[counter].match
+                  ? "TRUE"
+                  : "-";
+                newTweet["sexual_explicit"] = results[4].results[counter].match
+                  ? "TRUE"
+                  : "-";
+                newTweet["threat"] = results[5].results[counter].match
+                  ? "TRUE"
+                  : "-";
+                newTweet["toxicity"] = results[6].results[counter].match
+                  ? "TRUE"
+                  : "-";
+                return newTweet;
+              })
+            };
+          });
+        }
+      });
+  }
+
   async handleEnter(event) {
     if (event.keyCode === 13) {
       let textValue = event.target.value;
@@ -148,7 +197,11 @@ class App extends React.Component {
     return (
       <div className="App">
         <div className="button-cont">
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.handleFetch}
+          >
             Fetch Random Tweets
           </Button>
           <Button onClick={this.handleClear}>Clear Table</Button>

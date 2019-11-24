@@ -24,7 +24,7 @@ app.use(
 app.use(bodyParser.json());
 
 app.route("/search").get(function(req, res) {
-  T.get("search/tweets", { q: "stupid since:2018-07-11", count: 1 }, function(
+  T.get("search/tweets", { q: "since:2018-11-23", count: 3 }, function(
     err,
     data,
     response
@@ -32,12 +32,12 @@ app.route("/search").get(function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.send(JSON.stringify(data, null, 2));
+      res.json(data);
     }
   });
 });
 
-var port = process.env.PORT || process.env.VCAP_APP_PORT || 3012;
+var port = process.env.PORT || process.env.VCAP_APP_PORT || 3001;
 app.listen(port);
 
 const forceSSL = function() {
