@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/tweet-toxicity/static/css/main.ddf6aea9.chunk.css",
+    "main.js": "/tweet-toxicity/static/js/main.7adb9915.chunk.js",
+    "main.js.map": "/tweet-toxicity/static/js/main.7adb9915.chunk.js.map",
+    "runtime-main.js": "/tweet-toxicity/static/js/runtime-main.80e93534.js",
+    "runtime-main.js.map": "/tweet-toxicity/static/js/runtime-main.80e93534.js.map",
+    "static/js/2.8525a2b7.chunk.js": "/tweet-toxicity/static/js/2.8525a2b7.chunk.js",
+    "static/js/2.8525a2b7.chunk.js.map": "/tweet-toxicity/static/js/2.8525a2b7.chunk.js.map",
+    "index.html": "/tweet-toxicity/index.html",
+    "precache-manifest.5aadc9b439031860167259ec077527a2.js": "/tweet-toxicity/precache-manifest.5aadc9b439031860167259ec077527a2.js",
+    "service-worker.js": "/tweet-toxicity/service-worker.js",
+    "static/css/main.ddf6aea9.chunk.css.map": "/tweet-toxicity/static/css/main.ddf6aea9.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.80e93534.js",
+    "static/js/2.8525a2b7.chunk.js",
+    "static/css/main.ddf6aea9.chunk.css",
+    "static/js/main.7adb9915.chunk.js"
+  ]
+}
