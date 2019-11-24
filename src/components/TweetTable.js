@@ -11,7 +11,7 @@ import TableRow from "@material-ui/core/TableRow";
 const columns = [
   { id: "text", label: "Tweet", minWidth: 500, width: 500 },
   {
-    id: "identityAttack",
+    id: "identity_attack",
     label: "Identity Attack",
     width: 70,
     format: value => value.toLocaleString()
@@ -29,13 +29,13 @@ const columns = [
     format: value => value.toLocaleString()
   },
   {
-    id: "severeToxicity",
+    id: "severe_toxicity",
     label: "Severe Toxicity",
     width: 70,
     format: value => value.toLocaleString()
   },
   {
-    id: "sexualExplicit",
+    id: "sexual_explicit",
     label: "Sexual Explicit",
     width: 70,
     format: value => value.toLocaleString()
@@ -69,7 +69,6 @@ export function TweetTable(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  debugger;
   const rows = props.tweets || [];
 
   const handleChangePage = (event, newPage) => {
