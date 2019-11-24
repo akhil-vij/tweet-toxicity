@@ -34,12 +34,16 @@ class App extends React.Component {
       ]
     };
     this.handleEnter = this.handleEnter.bind(this);
+    this.model = null;
   }
 
   async componentDidMount() {
+    // Flow for the initial load
     // Load the model
-    let model = await toxicity.load(0.65);
-    const results = await model.classify(this.state.tweets.map(d => d.text));
+    this.model = await toxicity.load(0.65);
+    const results = await this.model.classify(
+      this.state.tweets.map(d => d.text)
+    );
     // Once you have the results, need to update the state
     this.setState(prevState => {
       return {
@@ -70,15 +74,31 @@ class App extends React.Component {
     });
   }
 
-  handleEnter(event) {
+  async handleEnter(event) {
     if (event.keyCode === 13) {
       let textValue = event.target.value;
-      // Run the model on the textValue
-      this.setState([
-        {
-          text: textValue
-        }
-      ]);
+      event.target.value = "";
+      const results = await this.model.classify(textValue);
+      let newTweet = {};
+      let counter = 0;
+      newTweet.text = textValue;
+      newTweet["identity_attack"] = results[0].results[counter].match
+        ? "TRUE"
+        : "-";
+      newTweet["insult"] = results[1].results[counter].match ? "TRUE" : "-";
+      newTweet["obscene"] = results[2].results[counter].match ? "TRUE" : "-";
+      newTweet["severe_toxicity"] = results[3].results[counter].match
+        ? "TRUE"
+        : "-";
+      newTweet["sexual_explicit"] = results[4].results[counter].match
+        ? "TRUE"
+        : "-";
+      newTweet["threat"] = results[5].results[counter].match ? "TRUE" : "-";
+      newTweet["toxicity"] = results[6].results[counter].match ? "TRUE" : "-";
+      // Need to just append one object to the state
+      this.setState({
+        tweets: [...this.state.tweets, newTweet]
+      });
     }
   }
   render() {
