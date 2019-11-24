@@ -22,7 +22,9 @@ app.use(
 app.use(bodyParser.json());
 
 app.route("/search").get(function(req, res) {
-  T.get("search/tweets", { q: "stupid", count: 20 }, function(
+  let keywords = ["stupid", "racist", "troll", "trolling", "nigger", "murder"];
+  let keyword = keywords[Math.floor(Math.random() * keywords.length)];
+  T.get("search/tweets", { q: keyword, count: 15 }, function(
     err,
     data,
     response

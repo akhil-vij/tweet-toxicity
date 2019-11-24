@@ -82,6 +82,7 @@ class App extends React.Component {
     this.handleEnter = this.handleEnter.bind(this);
     this.handleClear = this.handleClear.bind(this);
     this.handleFetch = this.handleFetch.bind(this);
+    this.handlePopulate = this.handlePopulate.bind(this);
     this.model = null;
   }
 
@@ -126,6 +127,38 @@ class App extends React.Component {
   handleClear() {
     this.setState({
       tweets: []
+    });
+  }
+
+  async handlePopulate() {
+    this.handleClear();
+    const results = await this.model.classify(dummyData.map(d => d.text));
+    this.setState(prevState => {
+      return {
+        tweets: dummyData.map((tweet, counter) => {
+          // Going through each column for each tweet
+          let newTweet = {};
+          newTweet.text = tweet.text;
+          newTweet["identity_attack"] = results[0].results[counter].match
+            ? "TRUE"
+            : "-";
+          newTweet["insult"] = results[1].results[counter].match ? "TRUE" : "-";
+          newTweet["obscene"] = results[2].results[counter].match
+            ? "TRUE"
+            : "-";
+          newTweet["severe_toxicity"] = results[3].results[counter].match
+            ? "TRUE"
+            : "-";
+          newTweet["sexual_explicit"] = results[4].results[counter].match
+            ? "TRUE"
+            : "-";
+          newTweet["threat"] = results[5].results[counter].match ? "TRUE" : "-";
+          newTweet["toxicity"] = results[6].results[counter].match
+            ? "TRUE"
+            : "-";
+          return newTweet;
+        })
+      };
     });
   }
 
@@ -220,13 +253,16 @@ class App extends React.Component {
             Fetch Random Tweet(s)
           </Button>
           <Button onClick={this.handleClear}>Clear Table</Button>
+          <Button onClick={this.handlePopulate}>
+            Populate with Dummy Data
+          </Button>
         </div>
         <TweetTable tweets={this.state.tweets} />
         <div className="manual-analysis-cont">
           <TextField
             fullWidth
             id="outlined-basic"
-            label="Enter any text and press Enter"
+            label="Enter any text for Toxicity classification and press Enter"
             variant="outlined"
             onChange={this.handleChange}
             onKeyDown={this.handleEnter}
