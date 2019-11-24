@@ -12,7 +12,8 @@ class App extends React.Component {
     this.state = {
       tweets: [
         {
-          text: "You Suck.",
+          text:
+            "I will kill your entire family if you do not give me $100000 as ransom amount.",
           identity_attack: "-",
           insult: "-",
           obscene: "-",
@@ -22,7 +23,40 @@ class App extends React.Component {
           toxicity: "-"
         },
         {
-          text: "I will kill you.",
+          text:
+            "You are writing stupid comments from your room hidden behind your screen. You are quite astonishingly stupid.",
+          identity_attack: "-",
+          insult: "-",
+          obscene: "-",
+          severe_toxicity: "-",
+          sexual_explicit: "-",
+          threat: "-",
+          toxicity: "-"
+        },
+        {
+          text:
+            "What a lovely and bright day. Sun is shining in the clear sky :)",
+          identity_attack: "-",
+          insult: "-",
+          obscene: "-",
+          severe_toxicity: "-",
+          sexual_explicit: "-",
+          threat: "-",
+          toxicity: "-"
+        },
+        {
+          text:
+            "What a lovely and bright day. Sun is shining in the clear sky :). Perfect day for murdering trolls like you.",
+          identity_attack: "-",
+          insult: "-",
+          obscene: "-",
+          severe_toxicity: "-",
+          sexual_explicit: "-",
+          threat: "-",
+          toxicity: "-"
+        },
+        {
+          text: "You are a racist moron.",
           identity_attack: "-",
           insult: "-",
           obscene: "-",
@@ -40,10 +74,11 @@ class App extends React.Component {
   async componentDidMount() {
     // Flow for the initial load
     // Load the model
-    this.model = await toxicity.load(0.65);
+    this.model = await toxicity.load(0.1);
     const results = await this.model.classify(
       this.state.tweets.map(d => d.text)
     );
+    console.log(results);
     // Once you have the results, need to update the state
     this.setState(prevState => {
       return {
