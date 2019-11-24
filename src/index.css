@@ -23,3 +23,13 @@ code {
 .manual-analysis-cont {
   margin-top: 20px;
 }
+
+.button-cont {
+  margin: 10px 0px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button-cont button {
+  margin-right: 10px;
+}

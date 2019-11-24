@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { TweetTable } from "./components/TweetTable.js";
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 import * as toxicity from "@tensorflow-models/toxicity";
 
@@ -68,6 +69,7 @@ class App extends React.Component {
       ]
     };
     this.handleEnter = this.handleEnter.bind(this);
+    this.handleClear = this.handleClear.bind(this);
     this.model = null;
   }
 
@@ -109,6 +111,12 @@ class App extends React.Component {
     });
   }
 
+  handleClear() {
+    this.setState({
+      tweets: []
+    });
+  }
+
   async handleEnter(event) {
     if (event.keyCode === 13) {
       let textValue = event.target.value;
@@ -139,6 +147,12 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <div className="button-cont">
+          <Button variant="contained" color="primary">
+            Fetch Random Tweets
+          </Button>
+          <Button onClick={this.handleClear}>Clear Table</Button>
+        </div>
         <TweetTable tweets={this.state.tweets} />
         <div className="manual-analysis-cont">
           <TextField
