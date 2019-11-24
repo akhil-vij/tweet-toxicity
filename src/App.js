@@ -74,7 +74,7 @@ class App extends React.Component {
   async componentDidMount() {
     // Flow for the initial load
     // Load the model
-    this.model = await toxicity.load(0.1);
+    this.model = await toxicity.load(0.5);
     const results = await this.model.classify(
       this.state.tweets.map(d => d.text)
     );
